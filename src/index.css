@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  primary: 68.5% 0.169 237.323;
+  secondary: 70.7% 0.165 254.624;
+}
