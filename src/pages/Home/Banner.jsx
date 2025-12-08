@@ -4,7 +4,7 @@ import banner from '../../assets/banner.jpg'
 const Banner = () => {
     return (
         <>
-            <div className="py-16 bg-gradient-to-r from-blue-100 to-white">
+            <div className="py-16 bg-gradient-to-r rounded-3xl border-2 border-gray-300 from-blue-100 to-white">
 
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 

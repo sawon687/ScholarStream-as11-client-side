@@ -1,11 +1,13 @@
 import React from 'react';
-
+import { motion } from "framer-motion";
 import GoogleLogin from '../../components/SocialLogin/GoogleLogin';
 import { Link } from 'react-router';
 
 const Login = () => {
     return (
-        <div className=" h-full  " >
+        <motion.div className=" h-full  " initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }} >
              <h1 className="text-5xl text-center mt-15 font-bold">Pleace Login now!</h1>
             <form action="" className='card-body flex items-center justify-center'>
                 <div className="card mx-auto w-full max-w-sm shrink-0l">
@@ -19,7 +21,7 @@ const Login = () => {
           <label className="label">Password</label>
           <input type="password" className="input rounded-full" placeholder="Password" />
           <div><a className="link link-hover">Forgot password?</a></div>
-          <button className="btn btn-neutral mt-4 rounded-full">Login</button>
+          <button className="btn btn-primary mt-4 rounded-full">Login</button>
         </fieldset>
         <div className="text-sm">
   Don't have an account?{" "}
@@ -34,7 +36,7 @@ const Login = () => {
       </div>
     </div>
             </form>
-        </div>
+        </motion.div>
     );
 };
 
