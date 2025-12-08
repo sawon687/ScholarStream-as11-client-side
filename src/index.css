@@ -10,4 +10,8 @@
   --color-secondary: teal;
 }
 
+.auth-bg{
+  background-image: url(../src/assets/authbg.jpg);
+}
+
 
