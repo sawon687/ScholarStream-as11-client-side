@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../Logo/Logo';
 import { Link, NavLink } from 'react-router';
 import UseAuth from '../../Hook/UseAuth';
 import auth from '../../assets/auth.jpg';
+import ProfileCard from '../DropdownProfile/ProfileCard';
 
 const Navbar = () => {
   const {user}=UseAuth()
+  const [toggle ,setToggle]=useState(false)
+  const profileDropdown=()=>{
+
+  }
     const links=<>
      <li><NavLink>Home</NavLink></li>
      <li><NavLink>All Scholarships</NavLink></li>
@@ -13,7 +18,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div className='w-full'>
+        <div className='w-full relative '>
             <div className="navbar bg-base-100 shadow-sm">
   <div className="navbar-start">
     <div className="dropdown">
@@ -35,12 +40,17 @@ const Navbar = () => {
   </div>
   <div className="navbar-end">
      {
-       user?<div className='border-4 border-primary rounded-full'><img src={auth} className='w-15 h-15 rounded-full' alt="" /></div>:<><Link to='/Login' className='btn border-2 border-primary'>Log in</Link>
+       user?<div onClick={()=>setToggle(!toggle)} className='border-4 border-primary rounded-full'><img src={user?.photoURL
+} className='w-15 h-15 rounded-full' alt="" /></div>:<><Link to='/Login' className='btn border-2 border-primary'>Log in</Link>
       <Link to='/Register' className='btn btn-primary mx-2'>Register</Link></>
      }
       
   </div>
 </div>
+     
+     <div className={`${toggle?'block':' hidden'}`}>
+       <ProfileCard  ></ProfileCard>
+     </div>
         </div>
     );
 };
