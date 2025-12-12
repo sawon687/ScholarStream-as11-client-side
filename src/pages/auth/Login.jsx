@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from "framer-motion";
 import GoogleLogin from '../../components/SocialLogin/GoogleLogin';
 import { Link } from 'react-router';
@@ -17,7 +17,7 @@ const Login = () => {
   const handleSignup=(data)=>{
     console.log(data)
      signupUser(data.email,data.password).then(res=>{
-      console.log(res)
+      console.log('res',res)
      })
   }
     return (
@@ -35,7 +35,8 @@ const Login = () => {
           <input type="email" {...register('email')} className="input rounded-full" placeholder="Email" />
           {/* password */}
           <label className="label">Password</label>
-          <input type="password" {...register('password')} className="input rounded-full" placeholder="Password" />
+          <input autocomplete="current-password"
+ type="password" {...register('password')} className="input rounded-full" placeholder="Password" />
           <div><a className="link link-hover">Forgot password?</a></div>
           <button className="btn btn-primary mt-4 rounded-full">Login</button>
         </fieldset>

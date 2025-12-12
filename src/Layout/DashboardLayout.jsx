@@ -4,6 +4,8 @@ import { NavLink, Outlet } from 'react-router';
 import logo from '../../src/assets/logo (3).png'
 import UseAuth from '../Hook/UseAuth';
 import {  IoMdAddCircleOutline } from 'react-icons/io';
+import { MdOutlineManageAccounts } from 'react-icons/md';
+import { FaGoogleScholar } from 'react-icons/fa6';
 const DashboardLayout = () => {
     const {user}=UseAuth()
     
@@ -52,6 +54,10 @@ const DashboardLayout = () => {
         </li>
         
         <li><NavLink to='add-scholarship' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Scholarship"><IoMdAddCircleOutline  className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Add Scholarship</h1></NavLink></li>
+        <li><NavLink to='ManageUsers' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Users"><MdOutlineManageAccounts
+className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
+<li><NavLink to='ManageScholarships' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Scholarships"><FaGoogleScholar
+className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
 
         {/* List item */}
         <li>

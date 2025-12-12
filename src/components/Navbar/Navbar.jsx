@@ -8,12 +8,10 @@ import ProfileCard from '../DropdownProfile/ProfileCard';
 const Navbar = () => {
   const {user}=UseAuth()
   const [toggle ,setToggle]=useState(false)
-  const profileDropdown=()=>{
-
-  }
+ 
     const links=<>
      <li><NavLink>Home</NavLink></li>
-     <li><NavLink>All Scholarships</NavLink></li>
+     <li><NavLink to='/allScholarship'>All Scholarships</NavLink></li>
      
     </>
 

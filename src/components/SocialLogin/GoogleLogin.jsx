@@ -1,23 +1,37 @@
 import React from 'react';
 import UseAuth from '../../Hook/UseAuth';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
 const GoogleLogin = () => {
     const { googleSignup } = UseAuth()
-
+       const axiosSecure=useAxiosSecure()
    const handlegoogleLogin = (e) => {
     e.preventDefault()
         googleSignup().then(res => {
-            console.log(res)
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "signup is successfully",
-                showConfirmButton: false,
-                timer: 1500
-            });
+           const user=res.user;
+            const userInfo={
+                name:user.displayName,
+                email:user.email,
+                photo:user.photoURL
+            }
+             axiosSecure.post('/user',userInfo).then(res => {
+                                console.log(res.data)
+                                if (res.data.insertedId) {
+                           
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "success",
+                                        title: "Your ar created your account successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+            
+                            })
+                        }).catch(error=>console.log('error',error))
 
-        })
+        
     }
     return (
         <div>
