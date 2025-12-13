@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { degrees } from 'framer-motion';
+
 import UpdateScoloarship from './updateScolarship/UpdateScoloarship';
 
+
+
+
+
+
 const ManageScholarships = () => {
+     const modalRef=useRef()
 
      const axiosSecure = useAxiosSecure()
+     const 
+     [updatedata,setUpdatedata]=useState({})
 
 const { data = [] } = useQuery({
   queryKey: ['scholarships'],
@@ -16,6 +24,11 @@ const { data = [] } = useQuery({
   }
 })
 
+const handleupdate=(data)=>{
+    modalRef.current.showModal()
+    setUpdatedata(data)
+    
+}
     return (
         <>
   <div className="overflow-x-auto p-6">
@@ -37,7 +50,7 @@ const { data = [] } = useQuery({
       {/* Row 1 */}
        
        {
-        data.map((data,index)=><tr>
+        data.map((data,index)=> <tr key={data._id}>
         <th>{index + 1}</th>
         <td>{data.scholarshipName}</td>
         <td>{data.universityCountry}</td>
@@ -45,21 +58,24 @@ const { data = [] } = useQuery({
         <td className="text-red-500 font-medium">{data.applicationDeadline}</td>
         <td>{data.serviceCharge}$</td>
         <td className="flex gap-2">
-          <button className="btn btn-sm btn-warning">Update
-            
-          </button>
+        <button className="btn btn-primary " onClick={()=>handleupdate(data)}>Update</button>
           <button className="btn btn-sm btn-error">Delete</button>
+ 
         </td>
+  
       </tr>)
        }
 
      
     </tbody>
+
+   
   </table>
 </div>
 
-  
-        </>
+<UpdateScoloarship updatedata={updatedata} modalRef={modalRef}></UpdateScoloarship>
+    </>
+    
     );
 };
 
