@@ -12,6 +12,7 @@ import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageScholarships from "../pages/Dashboard/ManageScholarships";
 
 import Paymentsuccess from "../pages/Payment/Paymentsuccess";
+import PaymentFailed from "../pages/Payment/PaymentFailed";
 
 const router=createBrowserRouter([
 
@@ -36,7 +37,11 @@ const router=createBrowserRouter([
         {
           path:'payment-success',
           Component:Paymentsuccess
-        }
+        },
+           {
+          path:'payment-failed',
+          Component:PaymentFailed,
+        },
       
       ] 
     },
