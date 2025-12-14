@@ -10,7 +10,8 @@ import Allscholarship from "../pages/AllScholarship/Allscholarship";
 import ScholarshipDetails from "../pages/AllScholarship/ScholarshipDetails";
 import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageScholarships from "../pages/Dashboard/ManageScholarships";
-import Checkout from "../pages/Payment/Checkout";
+
+import Paymentsuccess from "../pages/Payment/Paymentsuccess";
 
 const router=createBrowserRouter([
 
@@ -31,9 +32,10 @@ const router=createBrowserRouter([
            path:'/allScholarship',
            Component:Allscholarship,
         },
+       
         {
-          path:'/checkout/:id',
-          Component:Checkout,
+          path:'payment-success',
+          Component:Paymentsuccess
         }
       
       ] 

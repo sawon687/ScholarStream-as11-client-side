@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import {  useParams } from "react-router";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { LiaJenkins } from "react-icons/lia";
+import UseAuth from "../../Hook/UseAuth";
 
 const ScholarshipDetails = () => {
-    const navigate=useNavigate()
+    const {user}=UseAuth()
     const { id } = useParams();
     console.log('maer id',id)
       const axiosSecure=useAxiosSecure()
@@ -22,6 +23,27 @@ const ScholarshipDetails = () => {
     if(!data){
         return <p className="text-center mt-20">Scholarship Not Found</p>;
     }
+
+     console.log(user)
+const totalAmount=Number(data.applicationFees)+Number(data.serviceCharge)
+      const handlePayment=async()=>{
+    console.log('click')
+  
+    
+      const applicationInfo={
+            ...user,...data
+
+    }
+     applicationInfo.totalAmount=totalAmount
+    const res=await axiosSecure.post('/create-checkout-session',applicationInfo)
+    
+    
+    console.log(res.data.url)
+        if (res.data.url) {
+      window.location.href = res.data.url; // redirect to Stripe
+    }
+  }
+
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">
@@ -88,13 +110,13 @@ const ScholarshipDetails = () => {
                 </div>
 
                 {/* Back button */}
-                <Link
-                   to={`/checkout/${data._id}`}
+                <button
+                 onClick={handlePayment}
                   className="mt-6  btn btn-primary text-white rounded-xl
                              hover:bg-purple-500"
                 >
                   Apply for Scholarshi
-                </Link>
+                </button>
 
             </div>
         </div>
