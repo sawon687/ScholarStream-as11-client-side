@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import PhotoimgeLink from "../../../components/ImageConvart/PhotoimgeLink";
+import Swal from "sweetalert2";
 
 const UpdateScoloarship = ({ modalRef, updatedata }) => {
   const [imagePreview, setImagePreview] = useState(null);
@@ -14,7 +15,7 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
     reset
   } = useForm();
 
- 
+
   useEffect(() => {
     reset(updatedata);
     setImagePreview(null); // পুরনো preview reset
@@ -32,16 +33,29 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
       universityImage: imageUrl,
     };
 
-    
+
 
     console.log("UPDATE DATA:", updateInfo);
 
     // 🔥 Future: Send updateInfo to API
-    // await axiosSecure.patch(`/scholarships/${updatedata._id}`, updateInfo);
+    const res = await axiosSecure.patch(`/scholarships/${updatedata._id}`, updateInfo);
 
+    console.log(res.data)
+    if (res.data.modifiedCount) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "update scholarships data successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
     modalRef.current.close();
   };
 
+  
+
+  
   return (
     <dialog ref={modalRef} className="modal">
       <div className="modal-box max-w-6xl w-full h-[90vh] overflow-y-auto p-10 bg-[radial-gradient(circle_at_top_right,_rgba(50,0,80,0.6),_rgba(0,0,0,1))]">
@@ -110,18 +124,18 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
               </div>
 
               {/* Degree */}
-             <div>
-  <label className="text-white">Degree</label>
-  <select
-    {...register("degree", { required: true })}
-    defaultValue={updatedata.degree || "Bachelor"} // ✅ শুধু select এ
-    className="select select-bordered w-full bg-white/10 text-white"
-  >
-    <option className="text-black" value="Bachelor">Bachelor</option>
-    <option className="text-black" value="Masters">Masters</option>
-    <option className="text-black" value="PhD">PhD</option>
-  </select>
-</div>
+              <div>
+                <label className="text-white">Degree</label>
+                <select
+                  {...register("degree", { required: true })}
+                  defaultValue={updatedata.degree || "Bachelor"} // ✅ শুধু select এ
+                  className="select select-bordered w-full bg-white/10 text-white"
+                >
+                  <option className="text-black" value="Bachelor">Bachelor</option>
+                  <option className="text-black" value="Master">Master</option>
+                  <option className="text-black" value="PhD">PhD</option>
+                </select>
+              </div>
 
 
               {/* Application Deadline */}
@@ -145,13 +159,28 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
                   className="input input-bordered w-full bg-white/10 text-white"
                 />
               </div>
+                     <div>
+          <label className="text-white font-medium">Subject Category</label>
+          <select
+            {...register("subjectCategory", { required: true })} defaultValue={updatedata.subjectCategory}
+            className="select select-bordered w-full bg-white/10 text-white"
+          >
+          
+            <option className="text-black" value='Engineering'>Engineering</option>
+            <option className="text-black" value='Medical'>Medical</option>
+            <option className="text-black" value="Business">Business</option>
+            <option className="text-black" value='Arts & Humanities'>Arts & Humanities</option>
+          </select>
+          
+
+        </div>
 
               {/* University Image */}
               <div className="lg:col-span-3">
                 <label className="text-white">University Image</label>
                 <input
                   type="file"
-                 
+
                   {...register("photourl")}
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -162,7 +191,7 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
                 {(imagePreview || updatedata?.universityImage) && (
                   <img
                     src={imagePreview || updatedata.universityImage}
-                    className="w-40 mt-4 rounded-xl shadow-lg"
+                    className="w-40 h-20 mt-4 rounded-xl shadow-lg"
                   />
                 )}
               </div>

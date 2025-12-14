@@ -3,6 +3,7 @@ import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 import UpdateScoloarship from './updateScolarship/UpdateScoloarship';
+import Swal from 'sweetalert2';
 
 
 
@@ -16,7 +17,7 @@ const ManageScholarships = () => {
      const 
      [updatedata,setUpdatedata]=useState({})
 
-const { data = [] } = useQuery({
+const { data = [] ,refetch } = useQuery({
   queryKey: ['scholarships'],
   queryFn: async () => {
     const res = await axiosSecure.get('/scholarships')
@@ -28,6 +29,48 @@ const handleupdate=(data)=>{
     modalRef.current.showModal()
     setUpdatedata(data)
     
+}
+const handleDeletescholar=async(id)=>{
+       
+       
+Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then(async (result) => {
+  if (result.isConfirmed) {
+     const res= await axiosSecure.delete(`/scholarships/${id}`)
+
+       console.log(res.data)
+        if(res.data.deletedCount)
+        {
+              Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "update scholarships data successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+        }
+       console.log(res.data)
+        if(res.data.deletedCount)
+        {       refetch()
+              Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: " Scholarships Delete successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+        }
+    
+  }
+});
+      
 }
     return (
         <>
@@ -59,7 +102,7 @@ const handleupdate=(data)=>{
         <td>{data.serviceCharge}$</td>
         <td className="flex gap-2">
         <button className="btn btn-primary " onClick={()=>handleupdate(data)}>Update</button>
-          <button className="btn btn-sm btn-error">Delete</button>
+          <button onClick={()=>handleDeletescholar(data._id)} className="btn btn-sm btn-error">Delete</button>
  
         </td>
   

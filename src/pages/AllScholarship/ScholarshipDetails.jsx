@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { LiaJenkins } from "react-icons/lia";
 
 const ScholarshipDetails = () => {
-    
+    const navigate=useNavigate()
     const { id } = useParams();
     console.log('maer id',id)
       const axiosSecure=useAxiosSecure()
@@ -87,13 +88,13 @@ const ScholarshipDetails = () => {
                 </div>
 
                 {/* Back button */}
-                <button 
-                  onClick={() => window.history.back()}
-                  className="mt-6 px-5 py-2 bg-blue-600 text-white rounded-xl
-                             hover:bg-blue-700"
+                <Link
+                   to={`/checkout/${data._id}`}
+                  className="mt-6  btn btn-primary text-white rounded-xl
+                             hover:bg-purple-500"
                 >
-                    Back
-                </button>
+                  Apply for Scholarshi
+                </Link>
 
             </div>
         </div>
