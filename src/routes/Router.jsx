@@ -13,6 +13,7 @@ import ManageScholarships from "../pages/Dashboard/ManageScholarships";
 
 import Paymentsuccess from "../pages/Payment/Paymentsuccess";
 import PaymentFailed from "../pages/Payment/PaymentFailed";
+import MyApplications from "../pages/Dashboard/MyApplications";
 
 const router=createBrowserRouter([
 
@@ -77,6 +78,10 @@ const router=createBrowserRouter([
       path:'ManageScholarships',
       Component:ManageScholarships,
     },
+    {
+      path:'My-Applications',
+      Component:MyApplications,
+    }
    ]
 }
 

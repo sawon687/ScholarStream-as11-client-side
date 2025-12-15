@@ -6,6 +6,7 @@ import UseAuth from '../Hook/UseAuth';
 import {  IoMdAddCircleOutline } from 'react-icons/io';
 import { MdOutlineManageAccounts } from 'react-icons/md';
 import { FaGoogleScholar } from 'react-icons/fa6';
+import { HiOutlineDocumentCheck } from 'react-icons/hi2';
 const DashboardLayout = () => {
     const {user}=UseAuth()
     
@@ -58,6 +59,8 @@ const DashboardLayout = () => {
 className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
 <li><NavLink to='ManageScholarships' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Scholarships"><FaGoogleScholar
 className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
+<li><NavLink to='My-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications"><HiOutlineDocumentCheck
+className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>My Applications</h1></NavLink></li>
 
         {/* List item */}
         <li>

@@ -46,7 +46,7 @@ const PaymentFailed = () => {
         {/* Details */}
         <div className="bg-black/30 rounded-xl p-6 space-y-4">
           <div className="flex justify-between">
-            <span className="text-gray-400">Scholarship</span>
+            <span className="text-gray-400">ScholarshipName</span>
             <span className="font-semibold">{data?.scholarshipName}</span>
           </div>
 
