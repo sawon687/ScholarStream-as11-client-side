@@ -2,13 +2,19 @@ import React from 'react';
 import UseAuth from '../../Hook/UseAuth';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
+import { replace, useLocation, useNavigate } from 'react-router';
 
 const GoogleLogin = () => {
     const { googleSignup } = UseAuth()
+      const location=useLocation()
+ const navigate=useNavigate()
+   console.log('location',location)
+   const from=location.state?.from?.pathname || '/'
        const axiosSecure=useAxiosSecure()
    const handlegoogleLogin = (e) => {
     e.preventDefault()
         googleSignup().then(res => {
+            navigate(from,{replace:true})
            const user=res.user;
             const userInfo={
                 name:user.displayName,

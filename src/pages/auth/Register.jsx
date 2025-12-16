@@ -1,6 +1,6 @@
 
 import GoogleLogin from '../../components/SocialLogin/GoogleLogin';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../../Hook/UseAuth';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -9,6 +9,10 @@ import Swal from 'sweetalert2';
 
 const Register = () => {
     const { createUser, ProfileUpadate } = UseAuth()
+       const location=useLocation()
+ const navigate=useNavigate()
+   console.log('location',location)
+   const from=location.state?.from?.pathname || '/'
     const axiosSecure = useAxiosSecure()
     const {
         register,
@@ -21,7 +25,7 @@ const Register = () => {
         const profileImge = data.photo[0]
 
         createUser(data.email, data.password).then(res => {
-
+               navigate(from,{replace:true})
             const formdata = new FormData()
             formdata.append('image', profileImge)
             console.log('formdata:', formdata)
@@ -110,7 +114,7 @@ const Register = () => {
                             <div className="text-sm">
                                 Already have an account?{" "}
                                 <Link to="/Login" className="link link-hover text-primary">
-                                    Login
+                                    Register
                                 </Link>
                             </div>
 
@@ -118,7 +122,7 @@ const Register = () => {
                         </fieldset>
                         <h1 className='text-center text-xl'>-or-</h1>
                         {/* Google */}
-                        <GoogleLogin></GoogleLogin>
+                        <GoogleLogin ></GoogleLogin>
                     </div>
                 </div>
             </form>

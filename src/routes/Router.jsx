@@ -18,6 +18,8 @@ import ManageAppliedApplications from "../pages/Dashboard/ManageAppliedApplicati
 
 import MyReviews from "../pages/Dashboard/MyReviews";
 import AllReviews from "../pages/Dashboard/AllReviews";
+import PrivateRoute from "../Context/PrivateRoute";
+import Analytics from "../pages/Dashboard/Analytics";
 
 const router=createBrowserRouter([
 
@@ -32,7 +34,7 @@ const router=createBrowserRouter([
         },
         {
           path:'/ScholarshipDetails/:id',
-          Component:ScholarshipDetails,
+          element:<PrivateRoute><ScholarshipDetails/></PrivateRoute>
         },
         {
            path:'/allScholarship',
@@ -98,6 +100,10 @@ const router=createBrowserRouter([
     {
        path:'All-Reviews',
        Component:AllReviews,
+    },
+    {
+         path:'Analytics',
+         Component:Analytics
     },
    ]
 }

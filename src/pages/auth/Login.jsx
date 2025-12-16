@@ -1,26 +1,32 @@
 
 import { motion } from "framer-motion";
 import GoogleLogin from '../../components/SocialLogin/GoogleLogin';
-import { Link } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../../Hook/UseAuth';
 import { useForm } from 'react-hook-form';
 
 const Login = () => {
   const {signupUser}=UseAuth();
-   const {
+   const location=useLocation()
+ const navigate=useNavigate()
+   console.log('location',location)
+   const from=location.state?.from?.pathname || '/'
+   
+    const {
       register,
       handleSubmit,
-     
-      formState: { errors },
     } = useForm()
 
   const handleSignup=(data)=>{
     console.log(data)
      signupUser(data.email,data.password).then(res=>{
+      navigate(from,{replace:true})
+      
       console.log('res',res)
      })
   }
     return (
+      <>
         <motion.div className=" h-full  " initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }} >
@@ -42,18 +48,20 @@ const Login = () => {
         </fieldset>
         <div className="text-sm">
   Don't have an account?{" "}
-  <Link to="/register" className="link link-hover text-primary">
+  <Link to="/register" state={{from:location.state?.from}} className="link link-hover text-primary">
     Register
   </Link>
 </div>
 
         <h1 className='text-center text-xl'>-or-</h1>
         {/* Google */}
-        <GoogleLogin></GoogleLogin>
+        <GoogleLogin ></GoogleLogin>
       </div>
-    </div>
+    </div>   
             </form>
         </motion.div>
+     
+        </>
     );
 };
 
