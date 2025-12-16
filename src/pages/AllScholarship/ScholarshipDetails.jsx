@@ -4,6 +4,8 @@ import { useParams } from "react-router";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { LiaJenkins } from "react-icons/lia";
 import UseAuth from "../../Hook/UseAuth";
+import { FaStar } from "react-icons/fa6";
+import ScholarshipReviews from "./ScholarshipReviews";
 
 const ScholarshipDetails = () => {
     const { user } = UseAuth()
@@ -20,6 +22,15 @@ const ScholarshipDetails = () => {
         }
     })
 
+      const {data: reviewdata = [] } = useQuery({
+          queryKey: ['reviews', id],
+          queryFn: async () => {
+              const res = await axiosSecure.get(`/reviews?id=${id}`)
+          
+              return res.data
+          }
+      })
+      console.log('review data',reviewdata)
     if (!data) {
         return <p className="text-center mt-20">Scholarship Not Found</p>;
     }
@@ -137,6 +148,21 @@ const ScholarshipDetails = () => {
                 </button>
 
             </div>
+
+           <section className="mt-12">
+            <h2 className="text-2xl font-bold mb-6">
+                Student Reviews
+            </h2>
+
+            <div className="space-y-6">
+                {/* Review Card */}
+               {
+                    reviewdata.map(review=> <ScholarshipReviews review={review}></ScholarshipReviews> )
+               }
+
+              
+            </div>
+        </section>
         </div>
     );
 };
