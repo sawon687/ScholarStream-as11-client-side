@@ -45,17 +45,7 @@ Swal.fire({
   if (result.isConfirmed) {
      const res= await axiosSecure.delete(`/scholarships/${id}`)
 
-       console.log(res.data)
-        if(res.data.deletedCount)
-        {
-              Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "update scholarships data successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-        }
+     
        console.log(res.data)
         if(res.data.deletedCount)
         {       refetch()

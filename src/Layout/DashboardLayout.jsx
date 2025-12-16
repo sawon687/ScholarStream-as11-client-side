@@ -62,6 +62,10 @@ className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage 
 <li><NavLink to='My-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications"><HiOutlineDocumentCheck
 className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>My Applications</h1></NavLink></li>
 
+<li><NavLink to='Manage-Applied-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Applied Applications"><HiOutlineDocumentCheck
+className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>My Applications</h1></NavLink></li>
+
+
         {/* List item */}
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
