@@ -16,6 +16,9 @@ import PaymentFailed from "../pages/Payment/PaymentFailed";
 import MyApplications from "../pages/Dashboard/MyApplications";
 import ManageAppliedApplications from "../pages/Dashboard/ManageAppliedApplications";
 
+import MyReviews from "../pages/Dashboard/MyReviews";
+import AllReviews from "../pages/Dashboard/AllReviews";
+
 const router=createBrowserRouter([
 
     {
@@ -86,7 +89,16 @@ const router=createBrowserRouter([
      {
       path:'Manage-Applied-Applications',
       Component:ManageAppliedApplications,
-    }
+    },
+    {
+       path:'My-Reviews',
+       Component:MyReviews,
+    },
+
+    {
+       path:'All-Reviews',
+       Component:AllReviews,
+    },
    ]
 }
 

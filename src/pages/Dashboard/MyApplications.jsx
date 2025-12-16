@@ -14,6 +14,7 @@ const MyApplications = () => {
     const {
         register,
         handleSubmit,
+        reset,
     } = useForm()
     const { data: applications = [], refetch } = useQuery({
         queryKey: ['appliaction', user?.email],
@@ -61,10 +62,11 @@ const MyApplications = () => {
             scholarshipName: selected.scholarshipName,
             universityName: selected.universityName,
             reviewComment: data.userComment,
-            Rating: data.rating,
+            rating: data.rating,
             userImage: user.photoURL,
             userName: user.displayName,
             scholarshipId: selected.scholarshipId,
+            userEmail:user.email,
         }
 
         console.log('all', userReveiw)
@@ -73,6 +75,10 @@ const MyApplications = () => {
 
         console.log(res.data)
         if (res.data.insertedId) {
+           
+             setOpenReview(false)
+             reset()
+             
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -187,7 +193,10 @@ const MyApplications = () => {
                         <div className="modal-action">
                             <button
                                 className="btn btn-outline"
-                                onClick={() => setOpenDetails(false)}
+                                onClick={() =>{ setOpenDetails(false)
+                                    
+                                   
+                                }}
                             >
                                 Close
                             </button>
@@ -223,7 +232,10 @@ const MyApplications = () => {
                                 <button type="submit" className="btn btn-primary">Submit</button>
                                 <button
                                     className="btn btn-outline"
-                                    onClick={() => setOpenReview(false)}
+                                    onClick={() =>{ setOpenReview(false)
+                                        setSelected(null)
+                                        reset()
+                                    }}
                                 >
                                     Cancel
                                 </button>
