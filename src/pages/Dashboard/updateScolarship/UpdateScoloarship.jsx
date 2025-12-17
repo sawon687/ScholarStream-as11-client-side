@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const UpdateScoloarship = ({ modalRef, updatedata }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const axiosSecure = useAxiosSecure();
-
+    
   const {
     register,
     handleSubmit,
@@ -27,7 +27,8 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
     if (data.photourl?.length > 0) {
       imageUrl = await PhotoimgeLink(data.photourl[0]);
     }
-
+     delete data.photourl
+     delete data._id
     const updateInfo = {
       ...data,
       universityImage: imageUrl,
@@ -38,7 +39,7 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
     console.log("UPDATE DATA:", updateInfo);
 
     // 🔥 Future: Send updateInfo to API
-    const res = await axiosSecure.patch(`/scholarships/${updatedata._id}`, updateInfo);
+    const res = await axiosSecure.patch(`/scholarships/${updatedata._id}`,updateInfo);
 
     console.log(res.data)
     if (res.data.modifiedCount) {

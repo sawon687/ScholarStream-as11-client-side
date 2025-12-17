@@ -3,12 +3,7 @@ import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 import UpdateScoloarship from './updateScolarship/UpdateScoloarship';
-import Swal from 'sweetalert2';
-
-
-
-
-
+import Swal from 'sweetalert2'
 
 const ManageScholarships = () => {
      const modalRef=useRef()
