@@ -7,9 +7,17 @@ import {  IoMdAddCircleOutline } from 'react-icons/io';
 import { MdOutlineManageAccounts, MdOutlineReviews } from 'react-icons/md';
 import { FaGoogleScholar } from 'react-icons/fa6';
 import { HiOutlineDocumentCheck } from 'react-icons/hi2';
+import useRole from '../Hook/useRole';
+import AdminLink from '../DashboardLink/AdminLink';
+import ModeratorLink from '../DashboardLink/ModeratorLink';
 const DashboardLayout = () => {
-    const {user}=UseAuth()
+    const {user,loading}=UseAuth()
+    const {role, isLoading}=useRole()
     
+      if(loading|| isLoading)
+      {
+           return <h1 className='text-center text-5xl'>Loading this ...</h1>
+      } 
     return (
         <>
            <div className="drawer lg:drawer-open">
@@ -40,10 +48,7 @@ const DashboardLayout = () => {
        <li>
              <NavLink className='is-drawer-close:tooltip is-drawer-close:tooltip-right flex' data-tip='ScholarStream'>  <img className='w-10 h-10' src={logo} alt="" /> 
               <h1 className='text-primary text-2xl font-bold is-drawer-close:hidden'>ScholarStream</h1></NavLink>
-          
-          
-            
-         
+
         </li>
         {/* List item */}
         <li>
@@ -54,25 +59,25 @@ const DashboardLayout = () => {
           </button>
         </li>
         
-        <li><NavLink to='add-scholarship' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Scholarship"><IoMdAddCircleOutline  className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Add Scholarship</h1></NavLink></li>
-        <li><NavLink to='ManageUsers' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Users"><MdOutlineManageAccounts
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
-<li><NavLink to='ManageScholarships' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Scholarships"><FaGoogleScholar
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
-<li><NavLink to='My-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications"><HiOutlineDocumentCheck
+         {/* user link */}
+          {
+          
+             role === 'user' && <>
+             <li><NavLink to='My-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications"><HiOutlineDocumentCheck
 className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>My Applications</h1></NavLink></li>
-
-<li><NavLink to='Manage-Applied-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Applied Applications"><MdOutlineManageAccounts
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Applied Applications</h1></NavLink></li>
 
 <li><NavLink to='My-Reviews' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Reviews"><MdOutlineReviews
 className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>My Reviews</h1></NavLink></li> 
-
-<li><NavLink to='All-Reviews' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All-Reviews"><MdOutlineReviews
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>All Reviews</h1></NavLink></li>
-
+             </>
+          }
 
 
+
+
+           {/* admin dashboard Link  */}
+           <AdminLink></AdminLink>
+           {/* Moderator dashboard link */}
+            <ModeratorLink></ModeratorLink>
         {/* List item */}
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">

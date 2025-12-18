@@ -4,8 +4,11 @@ import UseAuth from '../Hook/UseAuth';
 
 const PrivateRoute = ({children}) => {
     const location=useLocation()
-    const {user}=UseAuth()
-
+    const {user,  loading}=UseAuth()
+ if(loading)
+ {
+     return <h1 className='text-center text-5xl'>Loading this ...</h1>;
+ }
 
    if(!user)
    {

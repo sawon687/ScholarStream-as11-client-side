@@ -76,9 +76,9 @@ const Analytics = () => {
 
   // 📌 Scholarships
   const { data: scholarships = [] } = useQuery({
-    queryKey: ["scholarship"],
+    queryKey: ["scholarships"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/scholarship");
+      const res = await axiosSecure.get("/scholarships");
       return res.data;
     },
   });

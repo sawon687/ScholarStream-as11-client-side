@@ -5,31 +5,32 @@ import auth from '../Farebase/farebase.init';
 
 const googleprovider = new GoogleAuthProvider();
 const AuthProvider = ({children}) => {
-const[loading,setLoading]=useState(false)
+const[loading,setLoading]=useState(true)
 const [user,setUser]=useState(null)
     const createUser=(email,password)=>{
-         setLoading(false)
+         setLoading(true)
        return createUserWithEmailAndPassword(auth,email,password)
     }
 
     const signupUser=(email,password)=>{
-      setLoading(false)
+      setLoading(true)
       return signInWithEmailAndPassword(auth,email,password)
     }
     const ProfileUpadate=(userProfile)=>{
+       setLoading(true)
        return updateProfile(auth.currentUser,userProfile)
     }
     const signOutUser=()=>{
       return signOut(auth)
     }
     const googleSignup=()=>{
+       setLoading(true)
       return signInWithPopup(auth,googleprovider)
     }
    useEffect(()=>{
        const unsubscirbe= onAuthStateChanged(auth,(currenUser)=>{
              setUser(currenUser)
-            
-             setLoading(true)
+             setLoading(false)
       })
 
       return()=>{

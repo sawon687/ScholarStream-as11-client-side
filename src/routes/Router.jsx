@@ -70,7 +70,7 @@ const router=createBrowserRouter([
 
 {
    path:'/Dashboard',
-   Component:DashboardLayout,
+   element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
    children:[
     {
        path:'add-scholarship',
