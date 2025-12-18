@@ -20,6 +20,8 @@ import MyReviews from "../pages/Dashboard/MyReviews";
 import AllReviews from "../pages/Dashboard/AllReviews";
 import PrivateRoute from "../Context/PrivateRoute";
 import Analytics from "../pages/Dashboard/Analytics";
+import AdminRoute from "../Context/AdminRoute";
+import ModeratorRoute from "../Context/ModeratorRoute";
 
 const router=createBrowserRouter([
 
@@ -74,15 +76,15 @@ const router=createBrowserRouter([
    children:[
     {
        path:'add-scholarship',
-       Component:AddScholarship,
+       element:<AdminRoute><AddScholarship></AddScholarship></AdminRoute>
     },
      {
        path:'ManageUsers',
-       Component:ManageUsers,
+       element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
     },
     {
       path:'ManageScholarships',
-      Component:ManageScholarships,
+      element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
     },
     {
       path:'My-Applications',
@@ -90,20 +92,20 @@ const router=createBrowserRouter([
     },
      {
       path:'Manage-Applied-Applications',
-      Component:ManageAppliedApplications,
+      element:<ModeratorRoute><ManageAppliedApplications></ManageAppliedApplications></ModeratorRoute>
     },
     {
        path:'My-Reviews',
-       Component:MyReviews,
+       Component:MyReviews
     },
 
     {
        path:'All-Reviews',
-       Component:AllReviews,
+       element:<ModeratorRoute><AllReviews></AllReviews></ModeratorRoute>
     },
     {
          path:'Analytics',
-         Component:Analytics
+         element:<AdminRoute><Analytics></Analytics></AdminRoute>
     },
    ]
 }
