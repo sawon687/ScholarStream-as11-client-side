@@ -101,7 +101,7 @@ Swal.fire({
   </table>
 </div>
 
-<UpdateScoloarship updatedata={updatedata} modalRef={modalRef}></UpdateScoloarship>
+<UpdateScoloarship updatedata={updatedata} modalRef={modalRef} refetch={refetch}></UpdateScoloarship>
     </>
     
     );

@@ -5,7 +5,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import PhotoimgeLink from "../../../components/ImageConvart/PhotoimgeLink";
 import Swal from "sweetalert2";
 
-const UpdateScoloarship = ({ modalRef, updatedata }) => {
+const UpdateScoloarship = ({ modalRef, updatedata,refetch }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const axiosSecure = useAxiosSecure();
     
@@ -43,6 +43,7 @@ const UpdateScoloarship = ({ modalRef, updatedata }) => {
 
     console.log(res.data)
     if (res.data.modifiedCount) {
+      refetch()
       Swal.fire({
         position: "center",
         icon: "success",

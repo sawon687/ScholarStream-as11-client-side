@@ -2,7 +2,7 @@ import React from 'react';
 import useRole from '../Hook/useRole';
 import ForbiddenError from '../pages/ForbiddenError';
 
-const ModeratorRoute = () => {
+const ModeratorRoute = ({children}) => {
     const {role,isLoading}=useRole()
     if(isLoading)
     {
@@ -13,6 +13,8 @@ const ModeratorRoute = () => {
     {
          return <ForbiddenError></ForbiddenError>
     }
+
+    return children
 };
 
 export default ModeratorRoute;

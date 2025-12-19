@@ -3,11 +3,18 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import PhotoimgeLink from "../../components/ImageConvart/PhotoimgeLink";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import UseAuth from "../../Hook/UseAuth";
+import { h1 } from "framer-motion/client";
 
 const AddScholarship = () => {
+  const {loading}=UseAuth()
   const [imagePreview, setImagePreview] = useState(null);
   const axiosSecure = useAxiosSecure();
-
+ 
+   if(loading)
+   {
+     return <h1 className="text-center text-5xl">Loading...</h1>
+   }
   const {
     register,
     handleSubmit,
@@ -30,6 +37,7 @@ const AddScholarship = () => {
 
   return (
    <div className="min-h-screen w-full p-10 flex justify-center items-start bg-[radial-gradient(circle_at_top_right,_rgba(50,0,80,0.6),_rgba(0,0,0,1))]">
+     
   <motion.div
     initial={{ opacity: 0, y: 40 }}
     animate={{ opacity: 1, y: 0 }}

@@ -26,6 +26,7 @@ const ManageApplications = () => {
         },
     });
 
+console.log('application=',applications)
     // Update application status
     const handleStatusUpdate = async (id, status) => {
         const res = await axiosSecure.patch(`/application/${id}`,{applicationStatus:status, });

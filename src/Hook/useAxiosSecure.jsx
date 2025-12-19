@@ -13,8 +13,6 @@ const useAxiosSecure = () => {
 const navigate=useNavigate()
   useEffect(() => {
 
-
-    console.log("Interceptor added token:", user?.accessToken);
     
   const reqInterceptor=  axiosSecure.interceptors.request.use((config) => {
       config.headers.Authorization = `Bearer ${user?.accessToken}`;

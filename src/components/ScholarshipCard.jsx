@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router";
+import UseAuth from "../Hook/UseAuth";
 
 const ScholarshipCard = ({ data }) => {
+  const  {loading}=UseAuth()
+
+ 
+     if(loading)
+    {
+        return <h1 className='text-center text-5xl'>Loading this ...</h1>;
+    }
+  
   return (
     <div
       className="w-80 bg-white rounded-2xl shadow-md overflow-hidden

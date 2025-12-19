@@ -14,14 +14,18 @@ import ManageScholarships from "../pages/Dashboard/ManageScholarships";
 import Paymentsuccess from "../pages/Payment/Paymentsuccess";
 import PaymentFailed from "../pages/Payment/PaymentFailed";
 import MyApplications from "../pages/Dashboard/MyApplications";
-import ManageAppliedApplications from "../pages/Dashboard/ManageAppliedApplications";
+
 
 import MyReviews from "../pages/Dashboard/MyReviews";
 import AllReviews from "../pages/Dashboard/AllReviews";
 import PrivateRoute from "../Context/PrivateRoute";
-import Analytics from "../pages/Dashboard/Analytics";
+
 import AdminRoute from "../Context/AdminRoute";
 import ModeratorRoute from "../Context/ModeratorRoute";
+import ManageApplications from "../pages/Dashboard/ManageAppliedApplications";
+import Analytics from "../pages/Dashboard/Analytics";
+import ForbiddenError from "../pages/ForbiddenError";
+
 
 const router=createBrowserRouter([
 
@@ -76,15 +80,15 @@ const router=createBrowserRouter([
    children:[
     {
        path:'add-scholarship',
-       element:<AdminRoute><AddScholarship></AddScholarship></AdminRoute>
+       element:<AdminRoute><AddScholarship></AddScholarship></AdminRoute>,
     },
      {
        path:'ManageUsers',
-       element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+       element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>,
     },
     {
       path:'ManageScholarships',
-      element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+      element:<AdminRoute><ManageScholarships></ManageScholarships></AdminRoute>,
     },
     {
       path:'My-Applications',
@@ -92,11 +96,11 @@ const router=createBrowserRouter([
     },
      {
       path:'Manage-Applied-Applications',
-      element:<ModeratorRoute><ManageAppliedApplications></ManageAppliedApplications></ModeratorRoute>
+      element:<ModeratorRoute><ManageApplications></ManageApplications></ModeratorRoute>
     },
     {
        path:'My-Reviews',
-       Component:MyReviews
+       Component:MyReviews,
     },
 
     {
@@ -105,7 +109,8 @@ const router=createBrowserRouter([
     },
     {
          path:'Analytics',
-         element:<AdminRoute><Analytics></Analytics></AdminRoute>
+         Component:Analytics,
+     
     },
    ]
 }
