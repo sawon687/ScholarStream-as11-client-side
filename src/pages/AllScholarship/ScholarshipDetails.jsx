@@ -6,14 +6,15 @@ import { LiaJenkins } from "react-icons/lia";
 import UseAuth from "../../Hook/UseAuth";
 import { FaStar } from "react-icons/fa6";
 import ScholarshipReviews from "./ScholarshipReviews";
+import { h1 } from "framer-motion/client";
 
 const ScholarshipDetails = () => {
-    const { user } = UseAuth()
+    const { user ,loading } = UseAuth()
     const { id } = useParams();
     console.log('maer id', id)
     const axiosSecure = useAxiosSecure()
     // Find selected scholarship
-    const { data = [] } = useQuery({
+    const { data = [] ,isLoading} = useQuery({
         queryKey: ['scholarship', id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/scholarships/${id}`)
@@ -33,6 +34,11 @@ const ScholarshipDetails = () => {
       console.log('review data',reviewdata)
     if (!data) {
         return <p className="text-center mt-20">Scholarship Not Found</p>;
+    }
+    
+    if(loading || isLoading)
+    {
+         return <h1>Loadin...</h1>
     }
 
     console.log(user)

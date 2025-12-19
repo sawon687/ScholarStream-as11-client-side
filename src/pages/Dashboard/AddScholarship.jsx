@@ -4,22 +4,22 @@ import { useForm } from "react-hook-form";
 import PhotoimgeLink from "../../components/ImageConvart/PhotoimgeLink";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import UseAuth from "../../Hook/UseAuth";
-import { h1 } from "framer-motion/client";
+
 
 const AddScholarship = () => {
   const {loading}=UseAuth()
   const [imagePreview, setImagePreview] = useState(null);
   const axiosSecure = useAxiosSecure();
- 
-   if(loading)
-   {
-     return <h1 className="text-center text-5xl">Loading...</h1>
-   }
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+ 
+   if(loading)
+   {
+     return <h1 className="text-center text-5xl">Loading...</h1>
+   }
 
   const handlescholarshipSubmit = async (data) => {
     const photourl = await PhotoimgeLink(data.photourl[0]);

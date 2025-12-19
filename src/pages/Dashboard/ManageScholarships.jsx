@@ -13,10 +13,10 @@ const ManageScholarships = () => {
      [updatedata,setUpdatedata]=useState({})
 
 const { data = [] ,refetch } = useQuery({
-  queryKey: ['scholarships'],
+  queryKey: ['scholarships','manageScolarship'],
   queryFn: async () => {
     const res = await axiosSecure.get('/scholarships')
-    return res.data
+    return res.data?.scholarData
   }
 })
 
