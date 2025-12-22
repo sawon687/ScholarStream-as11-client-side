@@ -9,8 +9,8 @@ import Loading from "../Loading";
 import useRole from "../../Hook/useRole";
 
 const Login = () => {
-  const { signupUser,loading} = UseAuth();
-  const {isLoading}=useRole()
+  const { signupUser} = UseAuth();
+
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || '/';
@@ -24,10 +24,7 @@ const Login = () => {
     });
   };
 
-  if(loading|| isLoading)
-  {
-     return <Loading></Loading>
-  }
+
 
   return (
     <motion.div

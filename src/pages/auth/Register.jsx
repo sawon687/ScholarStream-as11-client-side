@@ -11,8 +11,8 @@ import useRole from '../../Hook/useRole';
 import Loading from '../Loading';
 
 const Register = () => {
-  const { createUser, ProfileUpadate,loading } = UseAuth();
-  const {isLoading}=useRole()
+  const { createUser, ProfileUpadate } = UseAuth();
+
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || '/';
@@ -52,10 +52,7 @@ const Register = () => {
     });
   };
    
-   if(loading|| isLoading)
-    {
-       return <Loading></Loading>
-    }
+ 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 py-6 bg-gradient-to-r from-indigo-50 to-purple-50">
       <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-indigo-700">
