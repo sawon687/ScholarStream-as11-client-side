@@ -5,9 +5,12 @@ import UseAuth from '../../Hook/UseAuth';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import Loading from "../Loading";
+import useRole from "../../Hook/useRole";
 
 const Login = () => {
-  const { signupUser } = UseAuth();
+  const { signupUser,loading} = UseAuth();
+  const {isLoading}=useRole()
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || '/';
@@ -20,6 +23,11 @@ const Login = () => {
       navigate(from, { replace: true });
     });
   };
+
+  if(loading|| isLoading)
+  {
+     return <Loading></Loading>
+  }
 
   return (
     <motion.div
