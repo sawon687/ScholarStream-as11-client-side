@@ -41,8 +41,8 @@ const Paymentsuccess = () => {
 
     console.log('patdata',paydata)
     return (
-        <>
-          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-black to-emerald-950 p-6">
+        <div className='max-w-[1400px] bg-gradient-to-br from-green-900 via-black to-emerald-950'>
+          <div className="min-h-screen w-full  flex items-center justify-center  p-6">
 <motion.div
 initial={{ opacity: 0, scale: 0.9 }}
 animate={{ opacity: 1, scale: 1 }}
@@ -100,7 +100,7 @@ Go to My Applications
 </div>
 </motion.div>
 </div>  
-        </>
+        </div>
     );
 };
 

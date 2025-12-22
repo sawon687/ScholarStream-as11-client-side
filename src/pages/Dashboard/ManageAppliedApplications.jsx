@@ -139,7 +139,7 @@ const ManageApplications = () => {
                     </button>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40"
+                      className="dropdown-content menu p-2 shadow bg-gray-700 rounded-box w-40"
                     >
                       <li>
                         <button onClick={() => handleStatusUpdate(app._id, "Processing")}>
