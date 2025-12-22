@@ -4,149 +4,173 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import ScholarshipCard from "../../components/ScholarshipCard";
 import UseAuth from "../../Hook/UseAuth";
 import { useForm } from "react-hook-form";
-
+import Loading from "../Loading";
+import { useLocation } from "react-router";
+import { motion } from "framer-motion";
 
 const Allscholarship = () => {
   const { loading } = UseAuth();
   const axiosSecure = useAxiosSecure();
+  const location = useLocation();
 
   const [searchText, setSearchText] = useState("");
-  // const [categoryFilter, setCategoryFilter] = useState("");
-  // const [subjectFilter, setSubjectFilter] = useState("");
-  const [totalshoclarship, setTotalscholarship] = useState(0)
-  const [scholarship, setscholarData] = useState([])
-  const [currentPage,setCurrentPage]=useState(1)
-  // const [currentPage, setCurrentPage] = useState(1)
-  const [categoryFilter,setCategoryFilter]=useState()
-  const [subjectFilter,setSubjectFilter]=useState()
-  const [totalPage,setToalPage]=useState(0)
-  const limit = 10;
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [subjectFilter, setSubjectFilter] = useState("");
+  const [scholarship, setScholarData] = useState([]);
+  const [totalScholarship, setTotalScholarship] = useState(0);
+  const [currentPage, setCurrentPage] = useState(
+    Number(localStorage.getItem("page")) || 1
+  );
+  const [totalPage, setTotalPage] = useState(0);
+  const limit = 8;
+ console.log('subject',subjectFilter)
+  useEffect(() => {
+    localStorage.setItem("page", currentPage);
+  }, [currentPage]);
+
   const { data = {}, isLoading } = useQuery({
-    queryKey: ['scholarships', searchText,currentPage],
+    queryKey: ["scholarships", searchText, currentPage, categoryFilter, subjectFilter],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/scholarships?search=${searchText}&limit=${limit}&skip=${currentPage * 10 }&s=${subjectFilter||categoryFilter}`);
+      const res = await axiosSecure.get(
+        `/scholarships?search=${searchText}&limit=${limit}&skip=${(currentPage - 1) * limit}&category=${categoryFilter}&subject=${subjectFilter}`
+      );
       return res.data;
-    }
+    },
   });
 
-
- 
-
-
-
+  // Restore page if coming back from details page
   useEffect(() => {
-    if (data)
-    {   const count = totalshoclarship / limit
-    const page = Math.ceil(count)
-    console.log(page)
-     setToalPage(page)
+    if (location.state?.page) setCurrentPage(location.state.page);
+  }, [location.state]);
 
-      setTotalscholarship(data.totalScholar || [])
-      setscholarData(data.scholarData)
+  // Update scholarship data when query changes
+  useEffect(() => {
+    if (data?.scholarData) {
+      setScholarData(data.scholarData);
+      setTotalScholarship(data.totalScholar || 0);
+      setTotalPage(Math.ceil((data.totalScholar || 0) / limit));
     }
-  }, [data,totalshoclarship,limit])
+  }, [data]);
 
-  const {
-    register,
-    handleSubmit,
+  const { register, handleSubmit } = useForm();
 
-  } = useForm();
-  if (loading || isLoading) {
-    return <h1 className='text-center text-5xl mt-20'>Loading...</h1>;
-  }
+  if (loading || isLoading) return <Loading />;
 
-  const handlesearch = (data) => {
-    setSearchText(data.searchtext)
-  }
-
- 
+  const handleSearch = (formData) => {
+    setSearchText(formData.searchtext || "");
+    setCurrentPage(1);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="py-12 text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-        <h1 className="text-4xl md:text-5xl font-extrabold">
+    <>
+      {/* Banner */}
+      <div className="relative mt-25 mb-12 py-32 px-6 text-center bg-gradient-to-r from-cyan-500 via-teal-500 to-blue-600 rounded-b-3xl shadow-2xl overflow-hidden">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg">
           Explore Scholarships
         </h1>
-        <p className="mt-2 text-lg md:text-xl">
-          Find top scholarships worldwide
+        <p className="mt-4 text-lg md:text-2xl text-white/90 font-medium drop-shadow-md">
+          Discover top scholarships worldwide and advance your education.
         </p>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-teal-300/20 to-blue-300/20 rounded-b-3xl pointer-events-none"></div>
       </div>
 
-      {/* Search Input */}
-      <div className="max-w-[1400px] mx-auto px-6 py-6 flex justify-center">
-        <form onSubmit={handleSubmit(handlesearch)} className="w-full flex justify-center ">
-          <input
-            type="text"
-            placeholder="Search by Scholarship, University, Degree..."
+      <div className="min-h-screen pb-16 bg-gradient-to-b from-indigo-50 via-purple-50 to-pink-50">
+        {/* Search */}
+        <div className="max-w-[1400px] mx-auto px-6 py-6 flex justify-center">
+          <form onSubmit={handleSubmit(handleSearch)} className="w-full flex justify-center">
+            <input
+              type="text"
+              placeholder="Search by Scholarship, University, Degree..."
+              {...register("searchtext")}
+              className="w-full md:w-2/3 lg:w-1/2 px-6 py-4 rounded-full shadow-2xl border border-gray-300 focus:outline-none focus:ring-4 focus:ring-cyan-400 text-lg transition duration-300 bg-white/90 backdrop-blur-md placeholder-gray-400"
+            />
+          </form>
+        </div>
 
-            {...register("searchtext")}
-            className="w-full sm:w-1/2 px-4 py-3 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-          />
-        </form>
+        {/* Filters */}
+        <div className="max-w-[1400px] mx-auto px-6 py-4 flex flex-wrap gap-4 justify-center">
+          <select
+            className="rounded-full border border-gray-300 px-6 py-2 shadow-lg hover:shadow-xl transition duration-300 bg-white/90 backdrop-blur-md"
+            value={categoryFilter}
+            onChange={(e) => { setCategoryFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="">All Categories</option>
+            <option value="Full Funded">Full Funded</option>
+            <option value="Partial">Partial</option>
+            <option value="Self Fund">Self Fund</option>
+          </select>
 
+          <select
+            className="rounded-full border border-gray-300 px-6 py-2 shadow-lg hover:shadow-xl transition duration-300 bg-white/90 backdrop-blur-md"
+            value={subjectFilter}
+            onChange={(e) => { setSubjectFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="">All Subjects</option>
+            <option value="Science">Science</option>
+            <option value="Arts and Humanities">Arts and Humanities</option>
+            <option value="Engineering">Engineering</option>
+          </select>
+        </div>
+
+        {/* Scholarship Cards */}
+        <div className="max-w-[1400px] mx-auto px-6 py-12">
+          {scholarship?.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {scholarship.map((item) => (
+                <motion.div
+                  key={item._id}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="hover:scale-105 transition-transform duration-300"
+                >
+                  <ScholarshipCard data={item} page={currentPage} />
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-500 mt-20 text-2xl">
+              No scholarships found.
+            </p>
+          )}
+        </div>
+
+        {/* Pagination */}
+        <div className="flex mt-10 justify-center gap-3 mb-16">
+          {currentPage > 1 && (
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="px-5 py-2 rounded-full text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 shadow-lg transition"
+            >
+              Prev
+            </button>
+          )}
+
+          {[...Array(totalPage).keys()].map((index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(index + 1)}
+              className={`px-5 py-2 rounded-full transition duration-300 shadow-md ${
+                currentPage === index + 1
+                  ? "text-white bg-gradient-to-r from-cyan-500 to-blue-600"
+                  : "text-gray-700 hover:text-white hover:bg-gradient-to-r from-cyan-500 to-blue-600"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          {currentPage < totalPage && (
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="px-5 py-2 rounded-full text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 shadow-lg transition"
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
-
-     <div className="max-w-[1400px] mx-auto px-6 py-4 flex flex-wrap gap-3 justify-center">
-        {/* Category Filter */}
-        <select
-          className="input input-bordered"
-          value={categoryFilter}
-          onChange={(e) => {
-            setCategoryFilter(e.target.value);
-            setCurrentPage(1);
-          }}
-        >
-          <option value="">All Categories</option>
-          <option value="Full Fund">Full Fund</option>
-          <option value="Partial">Partial</option>
-          <option value="Self Fund">Self Fund</option>
-        </select>
-
-        {/* Subject Filter */}
-        <select
-          className="input input-bordered"
-          value={subjectFilter}
-          onChange={(e) => {
-            setSubjectFilter(e.target.value);
-            setCurrentPage(1);
-          }}
-        >
-          <option value="">All Subjects</option>
-          <option value="Science">Science</option>
-          <option value="Arts">Arts</option>
-          <option value="Engineering">Engineering</option>
-        </select>
-
-      
-      </div>
-      {/* Cards Container */}
-      <div className="max-w-[1400px] mx-auto px-6 pb-12">
-        {scholarship?.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {scholarship.map((scholarship) => (
-              <ScholarshipCard key={scholarship._id} data={scholarship} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-500 mt-16 text-xl">
-            No scholarships found.
-          </p>
-        )}
-      </div>
-
-       <div className="flex justify-center gap-3">
-          {
-            currentPage > 0 && <button onClick={()=> setCurrentPage(currentPage -1 )} className="btn">prev</button>
-          }
-         {
-         [...Array(totalPage).keys()].map((index)=><button onClick={()=>{
-          setCurrentPage(index)}} key={index}  className={`btn mx-2 ${currentPage === index  && 'btn-primary'}`}>{index}</button>)
-       }
-        <button onClick={()=> setCurrentPage(currentPage + 1)} className="btn">Next</button>
-       </div>
-      
-    </div>
+    </>
   );
 };
 

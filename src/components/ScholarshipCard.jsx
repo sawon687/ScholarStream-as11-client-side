@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import UseAuth from "../Hook/UseAuth";
+import Loading from "../pages/Loading";
 
 const ScholarshipCard = ({ data }) => {
   const  {loading}=UseAuth()
@@ -8,12 +9,12 @@ const ScholarshipCard = ({ data }) => {
  
      if(loading)
     {
-        return <h1 className='text-center text-5xl'>Loading this ...</h1>;
+        return <Loading></Loading>
     }
   
   return (
     <div
-      className="w-80 bg-white rounded-2xl shadow-md overflow-hidden
+      className="w-80 rounded-2xl h-full shadow-md overflow-hidden
                  hover:shadow-xl hover:-translate-y-1 transition
                  duration-300 border border-gray-100"
     >
@@ -69,9 +70,9 @@ const ScholarshipCard = ({ data }) => {
         {/* Details button */}
         <Link
           to={`/ScholarshipDetails/${data._id}`}
-          className="inline-block mt-4 px-4 py-2 bg-primary
-                     text-white rounded-xl text-sm font-medium
-                     hover:bg-blue-700 transition"
+          className="inline-block mt-4 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600
+                     text-white  text-sm font-medium
+                     hover:bg-gradient-to-r from-indigo-600 to-purple-600 transition"
         >
           View Details
         </Link>

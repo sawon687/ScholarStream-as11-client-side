@@ -25,6 +25,8 @@ import ModeratorRoute from "../Context/ModeratorRoute";
 import ManageApplications from "../pages/Dashboard/ManageAppliedApplications";
 import Analytics from "../pages/Dashboard/Analytics";
 import ForbiddenError from "../pages/ForbiddenError";
+import ErrorPage from "../pages/ErrorPage";
+import MyProfile from "../pages/MyProfile";
 
 
 const router=createBrowserRouter([
@@ -32,15 +34,17 @@ const router=createBrowserRouter([
     {
       path:'/',
       Component:MainLayout,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
         {
             path:'/',
             Component:Home,
 
         },
+        
         {
           path:'/ScholarshipDetails/:id',
-          element:<PrivateRoute><ScholarshipDetails/></PrivateRoute>
+          element:<PrivateRoute><ScholarshipDetails/></PrivateRoute>,
         },
         {
            path:'/allScholarship',
@@ -49,14 +53,14 @@ const router=createBrowserRouter([
        
         {
           path:'payment-success',
-          Component:Paymentsuccess
+          element:<PrivateRoute><Paymentsuccess></Paymentsuccess></PrivateRoute>
         },
            {
           path:'payment-failed',
-          Component:PaymentFailed,
+          element:<PrivateRoute><PaymentFailed></PaymentFailed></PrivateRoute>
         },
       
-      ] 
+      ]
     },
 
     {
@@ -78,6 +82,10 @@ const router=createBrowserRouter([
    path:'/Dashboard',
    element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
    children:[
+    {
+       path:'My-Profile',
+       Component:MyProfile,
+    },
     {
        path:'add-scholarship',
        element:<AdminRoute><AddScholarship></AddScholarship></AdminRoute>,
@@ -109,7 +117,7 @@ const router=createBrowserRouter([
     },
     {
          path:'Analytics',
-         Component:Analytics,
+         element:<AdminRoute><Analytics></Analytics></AdminRoute>
      
     },
    ]

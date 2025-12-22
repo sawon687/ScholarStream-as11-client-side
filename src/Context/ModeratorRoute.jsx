@@ -1,12 +1,13 @@
 import React from 'react';
 import useRole from '../Hook/useRole';
 import ForbiddenError from '../pages/ForbiddenError';
+import Loading from '../pages/Loading';
 
 const ModeratorRoute = ({children}) => {
     const {role,isLoading}=useRole()
     if(isLoading)
     {
-         return <h1 className='text-center text-5xl'>Loading this ...</h1>;
+         return <Loading></Loading>
     }
     
     if(role !== 'moderator')

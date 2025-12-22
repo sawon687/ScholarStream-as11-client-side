@@ -3,16 +3,17 @@ import { useEffect } from "react";
 import UseAuth from "./UseAuth";
 import { useNavigate } from "react-router";
 
+
 // axios instance ekbar create
 const axiosSecure = axios.create({
   baseURL: "http://localhost:3000",
 });
 
 const useAxiosSecure = () => {
-  const { user,signOutUser } = UseAuth();
+  const { user,signOutUser ,loading  } = UseAuth();
 const navigate=useNavigate()
   useEffect(() => {
-
+ if(loading) return 
     
   const reqInterceptor=  axiosSecure.interceptors.request.use((config) => {
       config.headers.Authorization = `Bearer ${user?.accessToken}`;
@@ -34,7 +35,7 @@ const navigate=useNavigate()
             axiosSecure.interceptors.response.eject(resInterceptor);
            axiosSecure.interceptors.request.eject(reqInterceptor);
     }
-  }, [user, navigate, signOutUser]);
+  }, [user, navigate, signOutUser, loading]);
 
   return axiosSecure;
 };

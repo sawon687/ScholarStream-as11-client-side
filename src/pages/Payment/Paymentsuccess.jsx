@@ -5,8 +5,12 @@ import Swal from 'sweetalert2';
 
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import UseAuth from '../../Hook/UseAuth';
+
 const Paymentsuccess = () => {
+
     const axiosSecure = useAxiosSecure()
+    const {loading}=UseAuth()
     const [searchparams] = useSearchParams()
     const sessionId = searchparams.get('session_id')
     const [paydata,setPayData]=useState({})
@@ -14,8 +18,8 @@ const Paymentsuccess = () => {
 
         if (sessionId) {
             axiosSecure.patch(`/payment-success?session_id=${sessionId}`).then(res => {
-                console.log(res.data)
-                setPayData(res.data.ScholarshipDetails)
+                console.log('data is',res.data)
+                setPayData(res.data.scholarshipDetails)
                 if (res.data.insertedId) {
                     Swal.fire({
                         position: "center",
@@ -29,6 +33,11 @@ const Paymentsuccess = () => {
         }
 
     }, [sessionId])
+
+    if(loading)
+    {
+        return <h1 className='text-5xl text-center'>Loading...</h1> 
+    }
 
     console.log('patdata',paydata)
     return (
@@ -59,24 +68,24 @@ Your scholarship application has been submitted successfully.
 <div className="bg-black/30 rounded-xl p-6 space-y-3">
 <div className="flex justify-between">
 <span className="text-gray-400">Scholarship</span>
-<span className="font-semibold">{paydata.scholarshipName}</span>
+<span className="font-semibold">{paydata?.scholarshipName}</span>
 </div>
 <div className="flex justify-between">
 <span className="text-gray-400">University</span>
-<span className="font-semibold">{paydata.universityName}</span>
+<span className="font-semibold">{paydata?.universityName}</span>
 </div>
 <div className="flex justify-between">
 <span className="text-gray-400">Degree</span>
-<span className="font-semibold">{paydata.degree}</span>
+<span className="font-semibold">{paydata?.degree}</span>
 </div>
 <div className="flex justify-between">
 <span className="text-gray-400">Subject</span>
-<span className="font-semibold">{paydata.subject}</span>
+<span className="font-semibold">{paydata?.subject}</span>
 </div>
 <hr className="border-white/10 my-2" />
 <div className="flex justify-between text-lg">
 <span className="text-gray-300">Amount Paid</span>
-<span className="font-bold text-green-400">${paydata.amount}</span>
+<span className="font-bold text-green-400">${paydata?.amount}</span>
 </div>
 </div>
 

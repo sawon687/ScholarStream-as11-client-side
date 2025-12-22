@@ -1,33 +1,27 @@
-import React from 'react';
-import useRole from '../Hook/useRole';
-import { NavLink } from 'react-router';
-import { FaGoogleScholar } from 'react-icons/fa6';
-import { IoMdAddCircleOutline } from 'react-icons/io';
-import { MdOutlineManageAccounts } from 'react-icons/md';
-import { TbDeviceAnalytics } from 'react-icons/tb';
+// src/DashboardLink/AdminLink.jsx
+import React from "react";
+import useRole from "../Hook/useRole";
+
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { FaGoogleScholar } from "react-icons/fa6";
+import { MdOutlineManageAccounts } from "react-icons/md";
+import { TbDeviceAnalytics } from "react-icons/tb";
+import Loading from "../pages/Loading";
+import SidebarItem from "./SidebarItem";
 
 const AdminLink = () => {
-    const {role, isLoading}=useRole()
-    return (
-        <div>
+  const { role, isLoading } = useRole();
+  if (isLoading) return <Loading />;
+  if (role !== "admin") return null;
 
- {/* admin dashboard  */}
-{  role === 'admin'&& <>     <li><NavLink to='add-scholarship' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Scholarship"><IoMdAddCircleOutline  className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Add Scholarship</h1></NavLink></li>
-     {/* manage scholrship */}
-     <li><NavLink to='ManageScholarships' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Scholarships"><FaGoogleScholar
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>"Manage Scholarships</h1></NavLink></li>
-    
-    {/* manage user */}
-    <li><NavLink to='ManageUsers' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Users"><MdOutlineManageAccounts
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Users</h1></NavLink></li>
- <li><NavLink to='Analytics' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Analytics"><TbDeviceAnalytics
-
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Analytics</h1></NavLink></li>
-
-    </>
-}
-        </div>
-    );
+  return (
+    <ul className="space-y-4">
+      <SidebarItem to="add-scholarship" icon={<IoMdAddCircleOutline size={20} />} label="Add Scholarship" />
+      <SidebarItem to="ManageScholarships" icon={<FaGoogleScholar size={20} />} label="Manage Scholarships" />
+      <SidebarItem to="ManageUsers" icon={<MdOutlineManageAccounts size={20} />} label="Manage Users" />
+      <SidebarItem to="Analytics" icon={<TbDeviceAnalytics size={20} />} label="Analytics" />
+    </ul>
+  );
 };
 
 export default AdminLink;

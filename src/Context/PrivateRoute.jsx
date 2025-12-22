@@ -1,13 +1,14 @@
 import React from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import UseAuth from '../Hook/UseAuth';
+import Loading from '../pages/Loading';
 
 const PrivateRoute = ({children}) => {
     const location=useLocation()
     const {user,  loading}=UseAuth()
  if(loading)
  {
-     return <h1 className='text-center text-5xl'>Loading this ...</h1>;
+     return <Loading></Loading>
  }
 
    if(!user)

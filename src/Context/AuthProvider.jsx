@@ -38,7 +38,7 @@ const [user,setUser]=useState(null)
       }
    },[])
 
-   console.log('user=',user)
+ 
 
     const info={
       createUser,
@@ -50,7 +50,7 @@ const [user,setUser]=useState(null)
       googleSignup,
     }
 
-     console.log(user)
+   
     return (
         <div>
             <AuthContext value={info}>{children}</AuthContext>

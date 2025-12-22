@@ -15,17 +15,17 @@ import { useState } from "react";
 import { FaUsers, FaMoneyBillWave, FaUniversity } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import UseAuth from "../../Hook/UseAuth";
+import Loading from "../Loading";
 
-const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"];
+const COLORS = ["#6366F1", "#10B981", "#F59E0B", "#EF4444"];
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white shadow rounded-lg px-3 py-2 border">
+      <div className="bg-gray-900 text-white shadow-lg rounded-lg px-4 py-2 border border-gray-600">
         <p className="font-semibold">{label}</p>
-        <p className="text-sm text-blue-600">
-          Applications: {payload[0].value}
-        </p>
+        <p className="text-sm text-blue-400">Applications: {payload[0].value}</p>
       </div>
     );
   }
@@ -34,20 +34,16 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const StatCard = ({ icon, title, value, gradient }) => (
   <div
-    className={`relative overflow-hidden rounded-3xl p-6 text-white shadow-lg 
-      transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl
+    className={`relative bg-white/10 backdrop-blur-xl border border-white/10
+      overflow-hidden rounded-2xl p-6 text-white shadow-lg
+      transition-all duration-300 hover:shadow-2xl hover:-translate-y-1
       bg-gradient-to-br ${gradient}`}
   >
-    <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-3xl" />
-
-    <div className="relative flex items-center gap-4">
-      <div className="p-4 rounded-2xl bg-white/20 backdrop-blur-md">
-        {icon}
-      </div>
-
+    <div className="flex items-center gap-4">
+      <div className="p-4 rounded-xl bg-white/20 shadow-inner">{icon}</div>
       <div>
-        <p className="text-sm opacity-90">{title}</p>
-        <h3 className="text-3xl font-extrabold tracking-tight">{value}</h3>
+        <p className="text-sm opacity-80">{title}</p>
+        <h3 className="text-3xl font-black tracking-tight">{value}</h3>
       </div>
     </div>
   </div>
@@ -55,8 +51,8 @@ const StatCard = ({ icon, title, value, gradient }) => (
 
 const Analytics = () => {
   const axiosSecure = useAxiosSecure();
+  const { loading } = UseAuth();
 
-  // 📌 Applications
   const { data: applicationdata = [] } = useQuery({
     queryKey: ["application"],
     queryFn: async () => {
@@ -65,8 +61,15 @@ const Analytics = () => {
     },
   });
 
-  // 📌 Users
-  const { data: users = [] } = useQuery({
+  const { data: paymentTotal = {} } = useQuery({
+    queryKey: ["payment"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/payment-analysis/total");
+      return res.data;
+    },
+  });
+
+  const { data: users = [], isLoading: userLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/user");
@@ -74,56 +77,32 @@ const Analytics = () => {
     },
   });
 
-  // 📌 Scholarships
   const { data: scholarships = [] } = useQuery({
     queryKey: ["scholarships"],
     queryFn: async () => {
       const res = await axiosSecure.get("/scholarships");
-      return res.data;
+      return res.data.totalScholar;
     },
   });
-
-  // 📌 Total Fees
-  const totalFees = applicationdata.reduce((sum, item) => {
-    const fee = Number(item.applicationFees  || 0);
-    return sum + fee;
-  }, 0);
 
   const [chartType, setChartType] = useState("bar");
   const [viewType, setViewType] = useState("category");
 
-  // CATEGORY COUNT
   const categoryCount = {};
-
- applicationdata.forEach(app=>{
-       if(!categoryCount[app.scholarshipCategory])
-       {
-            categoryCount[app.scholarshipCategory]=1
-       }
-       else{
-            categoryCount[app.scholarshipCategory]++
-       }
-  })
-
-
-
-
-  console.log('categoraycount',categoryCount)
+  applicationdata.forEach((app) => {
+    categoryCount[app.scholarshipCategory] =
+      (categoryCount[app.scholarshipCategory] || 0) + 1;
+  });
 
   const categoryData = Object.keys(categoryCount).map((key) => ({
     name: key,
     applications: categoryCount[key],
-  }));    
+  }));
 
-  console.log('categoryData',categoryData)
-  // UNIVERSITY COUNT
   const universityCount = {};
   applicationdata.forEach((app) => {
-    if (!universityCount[app.universityName]) {
-      universityCount[app.universityName] = 1;
-    } else {
-      universityCount[app.universityName]++;
-    }
+    universityCount[app.universityName] =
+      (universityCount[app.universityName] || 0) + 1;
   });
 
   const universityData = Object.keys(universityCount).map((key) => ({
@@ -133,114 +112,104 @@ const Analytics = () => {
 
   const data = viewType === "category" ? categoryData : universityData;
 
+  if (loading || userLoading) return <Loading />;
+
   return (
-    <section className="p-6 space-y-8">
-      <h2 className="text-2xl font-bold">Analytics Overview</h2>
-      <p className="text-sm text-gray-500">
-        Platform data & application visualization
-      </p>
-
-      {/* TOP CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <StatCard
-          icon={<FaUsers size={30} />}
-          title="Total Users"
-          value={users.length}
-          gradient="from-blue-500 via-indigo-500 to-purple-500"
-        />
-
-        <StatCard
-          icon={<FaMoneyBillWave size={26} />}
-          title="Total Fees Collected"
-          value={`$${totalFees}`}
-          gradient="from-emerald-500 via-teal-500 to-cyan-500"
-        />
-
-        <StatCard
-          icon={<FaUniversity size={26} />}
-          title="Total Scholarships"
-          value={scholarships.length}
-          gradient="from-orange-500 via-amber-500 to-yellow-500"
-        />
+    <section className="p-8 space-y-9 min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+        <h2 className="text-4xl font-black">📊 Analytics Dashboard</h2>
+        <p className="text-gray-300">Visual insights from system activity</p>
       </div>
 
-      {/* CHART AREA */}
-      <div className="bg-white rounded-2xl shadow p-6 space-y-4">
-        <div className="flex flex-wrap gap-3 justify-between">
-          <button
-            onClick={() => setViewType("category")}
-            className={`px-4 py-2 rounded-full ${
-              viewType === "category"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700"
-            }`}
-          >
-            Scholarship Category
-          </button>
+      {/* Cards */}
+     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <StatCard
+    icon={<FaUsers size={30} />}
+    title="Total Users"
+    value={users.length}
+    gradient="from-blue-500 via-indigo-500 to-purple-500"
+  />
+  <StatCard
+    icon={<FaMoneyBillWave size={26} />}
+    title="Total Fees Collected"
+    value={`$${paymentTotal.totalAmount || 0}`}
+    gradient="from-emerald-500 via-teal-500 to-cyan-500"
+  />
+  <StatCard
+    icon={<FaUniversity size={26} />}
+    title="Total Scholarships"
+    value={scholarships || 0}
+    gradient="from-orange-500/30 via-amber-500/30 to-yellow-500/30"
+  />
+</div>
+      {/* Chart */}
+      <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8 space-y-6">
+        <div className="flex flex-wrap gap-3">
+          {[
+            ["category", "Scholarship Category"],
+            ["university", "University"],
+          ].map(([type, label]) => (
+            <button
+              key={type}
+              onClick={() => setViewType(type)}
+              className={`px-5 py-2.5 rounded-full font-medium transition 
+                ${
+                  viewType === type
+                    ? "bg-blue-600 text-white shadow-lg"
+                    : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                }`}
+            >
+              {label}
+            </button>
+          ))}
 
-          <button
-            onClick={() => setViewType("university")}
-            className={`px-4 py-2 rounded-full ${
-              viewType === "university"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700"
-            }`}
-          >
-            University
-          </button>
-
-          <button
-            onClick={() => setChartType("bar")}
-            className={`px-4 py-2 rounded-full ${
-              chartType === "bar"
-                ? "bg-emerald-600 text-white"
-                : "bg-gray-100 text-gray-700"
-            }`}
-          >
-            Bar Chart
-          </button>
-
-          <button
-            onClick={() => setChartType("pie")}
-            className={`px-4 py-2 rounded-full ${
-              chartType === "pie"
-                ? "bg-emerald-600 text-white"
-                : "bg-gray-100 text-gray-700"
-            }`}
-          >
-            Pie Chart
-          </button>
+          {[
+            ["bar", "Bar Chart"],
+            ["pie", "Pie Chart"],
+          ].map(([type, label]) => (
+            <button
+              key={type}
+              onClick={() => setChartType(type)}
+              className={`px-5 py-2.5 rounded-full font-medium transition 
+                ${
+                  chartType === type
+                    ? "bg-emerald-600 text-white shadow-lg"
+                    : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
-        {/* ACTUAL CHART */}
-        <div className="h-80">
+        <div className="h-[450px]">
           <ResponsiveContainer width="100%" height="100%">
             {chartType === "bar" ? (
               <BarChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                <XAxis dataKey="name" stroke="#ccc" />
+                <YAxis stroke="#ccc" />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="applications">
-                  {data.map((_, index) => (
-                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  {data.map((_, i) => (
+                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
                   ))}
                 </Bar>
               </BarChart>
             ) : (
               <PieChart>
                 <Tooltip />
-                <Legend />
+                <Legend wrapperStyle={{ color: "#fff" }} />
                 <Pie
                   data={data}
                   dataKey="applications"
                   nameKey="name"
-                  innerRadius={40}
-                  outerRadius={80}
+                  innerRadius={80}
+                  outerRadius={140}
+                  paddingAngle={6}
                 >
-                  {data.map((_, index) => (
-                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  {data.map((_, i) => (
+                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
                   ))}
                 </Pie>
               </PieChart>

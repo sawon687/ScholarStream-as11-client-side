@@ -1,23 +1,31 @@
-import React from 'react';
-import useRole from '../Hook/useRole';
-import { NavLink } from 'react-router';
-import { MdOutlineManageAccounts, MdOutlineReviews } from 'react-icons/md';
+// src/DashboardLink/ModeratorLink.jsx
+import React from "react";
+import useRole from "../Hook/useRole";
+
+import { MdOutlineManageAccounts, MdOutlineReviews } from "react-icons/md";
+import Loading from "../pages/Loading";
+import SidebarItem from "./SidebarItem";
 
 const ModeratorLink = () => {
-    const {role,isLoading}=useRole()
-    return (
-        <div>
-            {
-                role === 'moderator' && <>
-                <li><NavLink to='Manage-Applied-Applications' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Applied Applications"><MdOutlineManageAccounts
-                className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>Manage Applied Applications</h1></NavLink></li>
-                
-                <li><NavLink to='All-Reviews' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All-Reviews"><MdOutlineReviews
-className='font-bold'size={18} /> <h1 className='is-drawer-close:hidden'>All Reviews</h1></NavLink></li>
-                </>
-            }
-        </div>
-    );
+  const { role, isLoading } = useRole();
+
+  if (isLoading) return <Loading />;
+  if (role !== "moderator") return null;
+
+  return (
+    <ul className="space-y-4">
+      <SidebarItem
+        to="Manage-Applied-Applications"
+        icon={<MdOutlineManageAccounts size={20} />}
+        label="Manage Applied Applications"
+      />
+      <SidebarItem
+        to="All-Reviews"
+        icon={<MdOutlineReviews size={20} />}
+        label="All Reviews"
+      />
+    </ul>
+  );
 };
 
 export default ModeratorLink;

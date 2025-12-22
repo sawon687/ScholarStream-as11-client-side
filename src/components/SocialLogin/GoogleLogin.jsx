@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { replace, useLocation, useNavigate } from 'react-router';
 import { h1 } from 'framer-motion/client';
+import Loading from '../../pages/Loading';
 
 const GoogleLogin = () => {
     const {loading}=UseAuth()
@@ -41,7 +42,7 @@ const GoogleLogin = () => {
 
         if(loading)
         {
-             return <h1>this loading...</h1>
+             return <Loading></Loading>
         }
     }
     return (
