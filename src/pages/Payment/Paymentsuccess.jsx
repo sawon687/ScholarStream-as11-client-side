@@ -32,7 +32,7 @@ const Paymentsuccess = () => {
             })
         }
 
-    }, [sessionId])
+    }, [sessionId, axiosSecure])
 
     if(loading)
     {
