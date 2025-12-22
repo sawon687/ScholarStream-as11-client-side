@@ -22,7 +22,7 @@ const Banner = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white font-bold rounded-full shadow-lg hover:shadow-2xl transition-all duration-300"
+            className="px-10 py-4  bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-2xl transition-all duration-300"
           >
             Search Scholarships
           </motion.button>

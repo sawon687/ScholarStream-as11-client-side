@@ -52,7 +52,7 @@ const Navbar = () => {
   return (
     <div className="w-full fixed z-50 top-0  left-0">
       {/* ---------------- NAVBAR MAIN ---------------- */}
-      <div className="navbar px-15 rounded-2xl backdrop-blur-xl bg-white/30 border-b border-white/20 shadow-lg">
+      <div className="navbar md:px-15 rounded-2xl backdrop-blur-xl bg-white/30 border-b border-white/20 shadow-lg">
         
         {/* ------------ LEFT ------------ */}
         <div className="navbar-start ">

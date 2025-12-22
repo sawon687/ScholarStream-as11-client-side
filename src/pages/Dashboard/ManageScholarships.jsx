@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import UpdateScoloarship from './updateScolarship/UpdateScoloarship';
 import Swal from 'sweetalert2';
 import Loading from '../Loading';
+import { FaTrashCan } from 'react-icons/fa6';
+import { MdOutlineSystemUpdateAlt } from 'react-icons/md';
 
 const ManageScholarships = () => {
   const modalRef = useRef();
@@ -85,16 +87,19 @@ const ManageScholarships = () => {
                 <td className="px-4 py-3 flex gap-2 justify-center">
                   <button
                     onClick={() => handleupdate(item)}
-                    className="px-3 py-1 rounded-md bg-purple-600/80 hover:bg-purple-600 text-white font-medium text-sm transition"
-                  >
-                    Update
+                    className="px-4 py-2 flex items-center gap-2 rounded-md bg-purple-600/80 hover:bg-purple-600 text-white font-medium text-sm transition"
+                  >   <MdOutlineSystemUpdateAlt />
+
+                    <span>Upate</span>
                   </button>
                   <button
-                    onClick={() => handleDeletescholar(item._id)}
-                    className="px-3 py-1 rounded-md bg-red-600/80 hover:bg-red-600 text-white font-medium text-sm transition"
-                  >
-                    Delete
-                  </button>
+  onClick={() => handleDeletescholar(item._id)}
+  className="flex items-center gap-2 px-4 py-2 rounded-md bg-red-600/80 hover:bg-red-600 text-white font-medium text-sm transition-all duration-200"
+>
+  <FaTrashCan size={16} />
+  <span>Delete</span>
+</button>
+
                 </td>
               </tr>
             ))}

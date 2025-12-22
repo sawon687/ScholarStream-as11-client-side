@@ -5,12 +5,13 @@ import PhotoimgeLink from "../../components/ImageConvart/PhotoimgeLink";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import UseAuth from "../../Hook/UseAuth";
 import Loading from "../Loading";
+import Swal from "sweetalert2";
 
 const AddScholarship = () => {
   const { loading } = UseAuth();
   const [imagePreview, setImagePreview] = useState(null);
   const axiosSecure = useAxiosSecure();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset ,formState: { errors } } = useForm();
 
   if (loading) return <Loading />;
 
@@ -20,6 +21,17 @@ const AddScholarship = () => {
       const scholarshipInfo = { ...data, universityImage: photourl };
       const res = await axiosSecure.post("/scholarships", scholarshipInfo);
       console.log("Data submitted:", res.data);
+      if(res.data.insertedId)
+      {
+         Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Scholarship add successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  reset()
+      }
     } catch (error) {
       console.error("Error submitting scholarship:", error);
     }
