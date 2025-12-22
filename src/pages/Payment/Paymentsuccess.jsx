@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import UseAuth from '../../Hook/UseAuth';
+import Loading from '../Loading';
 
 const Paymentsuccess = () => {
 
@@ -13,6 +14,7 @@ const Paymentsuccess = () => {
     const {loading}=UseAuth()
     const [searchparams] = useSearchParams()
     const sessionId = searchparams.get('session_id')
+   
     const [paydata,setPayData]=useState({})
     useEffect(() => {
 
@@ -36,7 +38,7 @@ const Paymentsuccess = () => {
 
     if(loading)
     {
-        return <h1 className='text-5xl text-center'>Loading...</h1> 
+        return <Loading></Loading>
     }
 
     console.log('patdata',paydata)

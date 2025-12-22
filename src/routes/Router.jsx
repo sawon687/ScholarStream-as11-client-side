@@ -24,7 +24,6 @@ import AdminRoute from "../Context/AdminRoute";
 import ModeratorRoute from "../Context/ModeratorRoute";
 import ManageApplications from "../pages/Dashboard/ManageAppliedApplications";
 import Analytics from "../pages/Dashboard/Analytics";
-import ForbiddenError from "../pages/ForbiddenError";
 import ErrorPage from "../pages/ErrorPage";
 import MyProfile from "../pages/MyProfile";
 

@@ -5,7 +5,7 @@ import Loading from '../pages/Loading';
 
 const PrivateRoute = ({children}) => {
     const location=useLocation()
-    const {user,  loading}=UseAuth()
+    const {user,loading}=UseAuth()
  if(loading)
  {
      return <Loading></Loading>
