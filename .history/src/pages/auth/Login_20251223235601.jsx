@@ -21,19 +21,12 @@ const Login = () => {
 
   const handleSignup = (data) => {
     signupUser(data.email, data.password).then(res => {
-         Swal.fire({
-                       position: 'center',
-                       icon: 'success',
-                       title: 'Login  successfully!',
-                       showConfirmButton: false,
-                       timer: 1500,
-                     });
       navigate(from, { replace: true });
     }).catch(error => {
       Swal.fire({
         position: 'center',
-        icon: 'error',
-        title:`${error.message}`,
+        icon: 'success',
+        title:`${e}`,
         showConfirmButton: false,
         timer: 1500,
       });

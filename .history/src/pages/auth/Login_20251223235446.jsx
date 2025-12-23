@@ -7,10 +7,9 @@ import { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Loading from "../Loading";
 import useRole from "../../Hook/useRole";
-import Swal from "sweetalert2";
 
 const Login = () => {
-  const { signupUser } = UseAuth();
+  const { signupUser} = UseAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,22 +20,9 @@ const Login = () => {
 
   const handleSignup = (data) => {
     signupUser(data.email, data.password).then(res => {
-         Swal.fire({
-                       position: 'center',
-                       icon: 'success',
-                       title: 'Login  successfully!',
-                       showConfirmButton: false,
-                       timer: 1500,
-                     });
       navigate(from, { replace: true });
-    }).catch(error => {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title:`${error.message}`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+    }).catch(error=>{
+       
     });
   };
 
