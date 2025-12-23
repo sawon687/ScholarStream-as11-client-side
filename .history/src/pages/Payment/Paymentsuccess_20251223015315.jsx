@@ -41,7 +41,7 @@ const Paymentsuccess = () => {
         return <Loading></Loading>
     }
 
-    console.log('patdata',paydata);
+    console.log('patdata',paydata)
     return (
         <div className='max-w-[1400px] bg-gradient-to-br from-green-900 via-black to-emerald-950'>
           <div className="min-h-screen w-full  flex items-center justify-center  p-6">
