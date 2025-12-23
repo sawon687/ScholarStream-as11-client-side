@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import banner from '../../assets/banner.jpg';
-import { Link } from 'react-router';
 
 const Banner = () => {
   return (
@@ -20,13 +19,13 @@ const Banner = () => {
           <p className="text-gray-600 text-lg md:text-xl">
             Explore verified scholarships, apply seamlessly, and get one step closer to your dream education.
           </p>
-          <Link to='/allScholarship'
+          <motion.Link
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-10 py-4  bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-2xl transition-all duration-300"
           >
             Search Scholarships
-          </Link>
+          </motion.Link>
         </motion.div>
 
         {/* Right */}
