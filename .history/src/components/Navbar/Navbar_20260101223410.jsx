@@ -15,7 +15,7 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `md:px-4 px-18 py-2 rounded-full  text-center transition-all duration-200 mx-1
+            `px-4 py-2 rounded-full transition-all duration-200 mx-1
             ${
               isActive
                 ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
@@ -31,7 +31,7 @@ const Navbar = () => {
         <NavLink
           to="/allScholarship"
           className={({ isActive }) =>
-            `md:px-4 py-2 px-10 mt-3 md:mt-0  text-center  rounded-full transition-all duration-200 mx-1
+            `px-4 py-2 rounded-full transition-all duration-200 mx-1
             ${
               isActive
                 ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
@@ -75,7 +75,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/Register"
-                      className="btn mt-3 btn-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white w-full"
+                      className="btn mt-3 btn-sm btn-primary w-full"
                     >
                       Register
                     </Link>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 
 // axios instance ekbar create
 const axiosSecure = axios.create({
-  baseURL: "https://schorship-as11-server-side.vercel.app",
+  baseURL: "https://scholar-stream-as11-server-side-ina.vercel.app",
 });
 
 const useAxiosSecure = () => {

@@ -52,7 +52,7 @@ const router=createBrowserRouter([
        
         {
           path:'payment-success',
-          element:<PrivateRoute><Paymentsuccess></Paymentsuccess></PrivateRoute>
+          element:<Paymentsuccess></Paymentsuccess></PrivateRoute>
         },
            {
           path:'payment-failed',
