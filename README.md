@@ -41,7 +41,26 @@ Finding scholarships can be a complex and time-consuming process. ScholarStream 
 - **Authentication & Hosting:** Firebase  
 - **State & Data Management:** Axios, React Query  
 - **UI Enhancements:** React Icons, Lucide React, React Tooltip, React Modal, React Spinners  
-- **Data Visualization:** Recharts  
-- **Alerts & Notifications:** SweetAlert2  
+- **Data Visualization:** Recharts
+- **Alerts & Notifications:** SweetAlert2
 
+  
+Provide a step-by-step guide run the project locally
+# Clone the repo
+git clone https://github.com/sawon687/ScholarStream-as11-client-side
+git clone https://github.com/sawon687/ScholarStream-as11-server-side
+
+# Navigate to project folder
+cd scholarstream
+
+# Install backend dependencies
+cd server
+npm install
+
+# Install frontend dependencies
+cd ../client
+npm install
+
+# Run the project locally
+npm start
 
