@@ -46,7 +46,7 @@ const ScholarshipDetails = () => {
         Swal.fire({
                    position: "center",
                    icon: "error",
-                   title: "🎉 Payment NotSuccessful! Please login to continue",
+                   title: "place user login after payment",
                    showConfirmButton: false,
                    timer: 2500,
                  });

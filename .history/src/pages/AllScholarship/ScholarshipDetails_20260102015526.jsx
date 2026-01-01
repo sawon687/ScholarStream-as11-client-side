@@ -47,6 +47,7 @@ const ScholarshipDetails = () => {
                    position: "center",
                    icon: "error",
                    title: "🎉 Payment NotSuccessful! Please login to continue",
+"
                    showConfirmButton: false,
                    timer: 2500,
                  });
