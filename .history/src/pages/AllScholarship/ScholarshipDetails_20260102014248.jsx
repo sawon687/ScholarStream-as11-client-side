@@ -5,7 +5,6 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import UseAuth from "../../Hook/UseAuth";
 import ScholarshipReviews from "./ScholarshipReviews";
 import Loading from "../Loading";
-import Swal from "sweetalert2";
 
 const ScholarshipDetails = () => {
   const { user, loading } = UseAuth();
@@ -41,16 +40,7 @@ const ScholarshipDetails = () => {
   }
 
   const handlePayment = async () => {
-    if(!user)
-    {
-        Swal.fire({
-                   position: "center",
-                   icon: "success",
-                   title: "place user login after payment",
-                   showConfirmButton: false,
-                   timer: 1500,
-                 });
-    }
+    if(!u)
     const applicationInfo = {
       scholarshipId: data._id,
       universityCity: data.universityCity,

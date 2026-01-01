@@ -5,7 +5,6 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import UseAuth from "../../Hook/UseAuth";
 import ScholarshipReviews from "./ScholarshipReviews";
 import Loading from "../Loading";
-import Swal from "sweetalert2";
 
 const ScholarshipDetails = () => {
   const { user, loading } = UseAuth();
@@ -43,10 +42,10 @@ const ScholarshipDetails = () => {
   const handlePayment = async () => {
     if(!user)
     {
-        Swal.fire({
+        Swa.fire({
                    position: "center",
                    icon: "success",
-                   title: "place user login after payment",
+                   title: "Scholarship deleted successfully",
                    showConfirmButton: false,
                    timer: 1500,
                  });
